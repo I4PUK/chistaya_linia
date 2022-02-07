@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 class CardPicture extends StatelessWidget {
-  CardPicture({this.onTap, this.imagePath});
+  const CardPicture({Key? key, this.onTap, this.imagePath}) : super(key: key);
 
   final Function()? onTap;
   final String? imagePath;
@@ -15,10 +15,10 @@ class CardPicture extends StatelessWidget {
       return Card(
         child: Container(
           height: 300,
-          padding: EdgeInsets.all(10.0),
+          padding: const EdgeInsets.all(10.0),
           width: size.width * .70,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(4.0)),
+            borderRadius: const BorderRadius.all(Radius.circular(4.0)),
             image: DecorationImage(
                 fit: BoxFit.cover, image: FileImage(File(imagePath as String))),
           ),
@@ -28,7 +28,7 @@ class CardPicture extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   shape: BoxShape.circle,
                   color: Colors.redAccent,
                   boxShadow: [
@@ -41,7 +41,7 @@ class CardPicture extends StatelessWidget {
                 ),
                 child: IconButton(onPressed: (){
                 print('icon press');
-              }, icon: Icon(Icons.delete, color: Colors.white)),
+              }, icon: const Icon(Icons.delete, color: Colors.white)),
               )
             ],
           ),
@@ -52,9 +52,9 @@ class CardPicture extends StatelessWidget {
     return Card(
         elevation: 3,
         child: InkWell(
-          onTap: this.onTap,
+          onTap: onTap,
           child: Container(
-            padding: EdgeInsets.symmetric(vertical: 18, horizontal: 25),
+            padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 25),
             width: size.width * .70,
             height: 100,
             child: Column(

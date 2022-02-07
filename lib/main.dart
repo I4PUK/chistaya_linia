@@ -6,10 +6,12 @@ import 'package:flutter/material.dart';
 // import 'package:flutter/rendering.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -19,13 +21,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Flutter Upload'),
+      home: const MyHomePage(title: 'Flutter Upload'),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key? key, required this.title}) : super(key: key);
+  const MyHomePage({Key? key, required this.title}) : super(key: key);
 
   final String title;
 
@@ -37,7 +39,7 @@ class _MyHomePageState extends State<MyHomePage> {
   // final HttpUploadService _httpUploadService = HttpUploadService();
   final DioUploadService _dioUploadService = DioUploadService();
   late CameraDescription _cameraDescription;
-  List<String> _images = [];
+  final List<String> _images = [];
   @override
   void initState() {
     super.initState();
@@ -60,23 +62,21 @@ class _MyHomePageState extends State<MyHomePage> {
         context: context,
         builder: (c) {
           return AlertDialog(
-            title: Text('$title'),
+            title: Text(title),
             content: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                Container(
-                  child: Text('$message'),
-                )
+                Text(message)
               ],
             ),
             actions: <Widget>[
               TextButton(
-                child: Text(
+                child: const Text(
                   'OK',
                   // style: greenText,
                 ),
-                onPressed: ok != null ? ok : Navigator.of(context).pop,
+                onPressed: ok ?? Navigator.of(context).pop,
               ),
             ],
           );
@@ -96,19 +96,17 @@ class _MyHomePageState extends State<MyHomePage> {
               return willPop;
             },
             child: AlertDialog(
-              content: Container(
-                child: Row(
-                  children: <Widget>[
-                    CircularProgressIndicator(),
-                    SizedBox(
-                      width: 20.0,
-                    ),
-                    Text(
-                      text,
-                      style: TextStyle(fontSize: 18.0),
-                    )
-                  ],
-                ),
+              content: Row(
+                children: <Widget>[
+                  const CircularProgressIndicator(),
+                  const SizedBox(
+                    width: 20.0,
+                  ),
+                  Text(
+                    text,
+                    style: const TextStyle(fontSize: 18.0),
+                  )
+                ],
               ),
             ),
           );
@@ -120,15 +118,15 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
         body: SafeArea(
       child: SingleChildScrollView(
-        padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
+        padding: const EdgeInsets.only(top: 20.0, bottom: 20.0),
         child: Column(
           children: [
-            Text('Send least two pictures', style: TextStyle(fontSize: 17.0)),
-            SizedBox(
+            const Text('Send least two pictures', style: TextStyle(fontSize: 17.0)),
+            const SizedBox(
               height: 20,
             ),
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 10.0),
+              padding: const EdgeInsets.symmetric(horizontal: 10.0),
               height: 400,
               child: ListView(
                   scrollDirection: Axis.horizontal,
@@ -159,11 +157,11 @@ class _MyHomePageState extends State<MyHomePage> {
                               ))
                           .toList()),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20.0,
             ),
             Padding(
-                padding: EdgeInsets.all(10.0),
+                padding: const EdgeInsets.all(10.0),
                 child: Row(
                   children: [
                     Expanded(
@@ -175,9 +173,9 @@ class _MyHomePageState extends State<MyHomePage> {
                                 Colors.indigo.shade800
                               ]),
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(3.0))),
+                                  const BorderRadius.all(Radius.circular(3.0))),
                           child: RawMaterialButton(
-                            padding: EdgeInsets.symmetric(vertical: 12.0),
+                            padding: const EdgeInsets.symmetric(vertical: 12.0),
                             onPressed: () async {
                               // show loader
                               presentLoader(context, text: 'Wait...');
@@ -201,7 +199,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                   title: 'Success HTTP',
                                   message: responseDataHttp);
                             },
-                            child: Center(
+                            child: const Center(
                                 child: Text(
                               'SEND',
                               style: TextStyle(
@@ -212,7 +210,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           )),
                     )
                   ],
-                ))
+                ),),
           ],
         ),
       ),

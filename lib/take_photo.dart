@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class TakePhoto extends StatefulWidget {
   final CameraDescription? camera;
 
-  TakePhoto({this.camera});
+  const TakePhoto({Key? key, this.camera}) : super(key: key);
 
   @override
   _TakePhotoState createState() => _TakePhotoState();
@@ -47,27 +47,24 @@ class _TakePhotoState extends State<TakePhoto> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Take picture'),
+        title: const Text('Take picture'),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           final file = await takePicture();
-          Navigator.of(context).pop(file != null ? file.path : null);
+          Navigator.of(context).pop(file?.path);
         },
-        child: Icon(Icons.camera_alt),
+        child: const Icon(Icons.camera_alt),
       ),
       body: FutureBuilder<void>(
         future: _initializeControllerFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             // If the Future is complete, display the preview.
-            return Container(
-              // height: MediaQuery.of(context).size.height,
-              child: CameraPreview(_controller),
-            );
+            return CameraPreview(_controller);
           } else {
             // Otherwise, display a loading indicator.
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           }
         },
       ),
