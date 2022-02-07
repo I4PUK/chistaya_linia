@@ -2,11 +2,13 @@ import 'package:chistaya_linia_test/card_picture.dart';
 import 'package:chistaya_linia_test/take_photo.dart';
 import 'package:chistaya_linia_test/dio_upload_service.dart';
 import 'package:camera/camera.dart';
+import 'package:chistaya_linia_test/widgets/start.dart';
+import 'package:chistaya_linia_test/widgets/take_photo.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter/rendering.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const MaterialApp(home: StartWidget()));
 }
 
 class MyApp extends StatelessWidget {
@@ -16,7 +18,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Upload',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -148,8 +149,6 @@ class _MyHomePageState extends State<MyHomePage> {
                             }
                           },
                         ),
-                        // CardPicture(),
-                        // CardPicture(),
                       ] +
                       _images
                           .map((String path) => CardPicture(
@@ -180,24 +179,24 @@ class _MyHomePageState extends State<MyHomePage> {
                               // show loader
                               presentLoader(context, text: 'Wait...');
 
-                              // calling with dio
-                              var responseDataDio =
-                                  await _dioUploadService.uploadPhotos(_images);
+                              // // calling with dio
+                              // var responseDataDio =
+                              //     await _dioUploadService.uploadPhotos(_images);
 
-                              // calling with http
-                              var responseDataHttp = await _dioUploadService
-                                  .uploadPhotos(_images);
+                              // // calling with http
+                              // var responseDataHttp = await _dioUploadService
+                              //     .uploadPhotos(_images);
 
-                              // hide loader
-                              Navigator.of(context).pop();
+                              // // hide loader
+                              // Navigator.of(context).pop();
 
-                              // showing alert dialogs
-                              await presentAlert(context,
-                                  title: 'Success Dio',
-                                  message: responseDataDio.toString());
-                              await presentAlert(context,
-                                  title: 'Success HTTP',
-                                  message: responseDataHttp);
+                              // // showing alert dialogs
+                              // await presentAlert(context,
+                              //     title: 'Success Dio',
+                              //     message: responseDataDio.toString());
+                              // await presentAlert(context,
+                              //     title: 'Success HTTP',
+                              //     message: responseDataHttp);
                             },
                             child: const Center(
                                 child: Text(
