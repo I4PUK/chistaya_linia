@@ -10,6 +10,7 @@ class CameraCubit extends Cubit<CameraState> {
   CameraCubit(initialState) : super(initialState);
 
   dynamic postImage(String path) async {
+    emit(UploadingImage());
     final result = await dioService.uploadPhotosWithPath(path);
     result.url != null
         ? emit(UploadingImageSuccess(result))

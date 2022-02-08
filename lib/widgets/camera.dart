@@ -52,7 +52,7 @@ class _CameraScreenState extends State<CameraScreen> {
             return initializeCamera();
           }
           if (state is UploadingImage) {
-            return const Center(child: Text('uploading'));
+            return const Center(child: CircularProgressIndicator());
           }
           if (state is UploadingImageSuccess) {
             return LinkWidget(photo: state.photo);
