@@ -1,7 +1,8 @@
 import 'package:camera/camera.dart';
-import 'package:chistaya_linia_test/take_photo.dart';
-import 'package:chistaya_linia_test/widgets/take_photo.dart';
+import 'package:chistaya_linia_test/cubit/camera/camera_cubit.dart';
+import 'package:chistaya_linia_test/widgets/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class StartWidget extends StatefulWidget {
   const StartWidget({Key? key, String? imagePath}) : super(key: key);
@@ -37,17 +38,20 @@ class _StartWidgetState extends State<StartWidget> {
       appBar: AppBar(),
       body: Center(child: Text(text)),
       floatingActionButton: FloatingActionButton(
-          child: const Icon(Icons.camera_alt),
-          onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (_) => TakePhoto(
+        child: const Icon(Icons.camera_alt),
+        onPressed: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (_) => BlocProvider(
+                create: (context) => CameraCubit(const Initial()),
+                child: CameraScreen(
                   camera: _cameraDescription,
                 ),
               ),
-            );
-          },
-        ),
+            ),
+          );
+        },
+      ),
     );
   }
 }

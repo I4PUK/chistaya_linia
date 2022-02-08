@@ -1,19 +1,19 @@
 import 'package:camera/camera.dart';
-import 'package:chistaya_linia_test/dio_upload_service.dart';
+import 'package:chistaya_linia_test/cubit/camera/camera_cubit.dart';
 import 'package:chistaya_linia_test/widgets/link.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class TakePhoto extends StatefulWidget {
+class CameraScreen extends StatefulWidget {
   final CameraDescription? camera;
 
-  const TakePhoto({Key? key, this.camera}) : super(key: key);
+  const CameraScreen({Key? key, this.camera}) : super(key: key);
 
   @override
-  _TakePhotoState createState() => _TakePhotoState();
+  _CameraScreenState createState() => _CameraScreenState();
 }
 
-class _TakePhotoState extends State<TakePhoto> {
-  final DioUploadService _dioUploadService = DioUploadService();
+class _CameraScreenState extends State<CameraScreen> {
   late CameraController _controller;
   late Future<void> _initializeControllerFuture;
 
@@ -32,45 +32,41 @@ class _TakePhotoState extends State<TakePhoto> {
     _initializeControllerFuture = _controller.initialize();
   }
 
-  Future<XFile?> takePicture() async {
-    if (_controller.value.isTakingPicture) {
-      return null;
-    }
-
-    try {
-      XFile file = await _controller.takePicture();
-      return file;
-    } on CameraException catch (e) {
-      print(e);
-      return null;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
+    final cameraCubit = BlocProvider.of<CameraCubit>(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Take picture'),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          final file = await takePicture();      
-          // calling with dio
-          var responseDataDio =
-              await _dioUploadService.uploadPhotos(file!.path);
-          Navigator.push(
-            context,
-            PageRouteBuilder(
-              opaque: false,
-              pageBuilder: (BuildContext context, _, __) {
-                return LinkWidget(text: responseDataDio.toString());
-              },
-            ),
-          );
+          final file = await cameraCubit.takePicture(_controller);
+          cameraCubit.postImage(file!.path);
         },
         child: const Icon(Icons.camera_alt),
       ),
-      body: FutureBuilder<void>(
+      body: BlocBuilder<CameraCubit, CameraState>(
+        builder: (context, state) {
+          if (state is Initial) {
+            return initializeCamera();
+          }
+          if (state is UploadingImage) {
+            return const Center(child: Text('uploading'));
+          }
+          if (state is UploadingImageSuccess) {
+            return LinkWidget(photo: state.photo);
+          }
+          if (state is UploadingImageFailed) {
+            return const Text('UploadingFailed');
+          }
+          return const Text('error');
+        },
+      ),
+    );
+  }
+
+  Widget initializeCamera() => FutureBuilder<void>(
         future: _initializeControllerFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
@@ -81,7 +77,5 @@ class _TakePhotoState extends State<TakePhoto> {
             return const Center(child: CircularProgressIndicator());
           }
         },
-      ),
-    );
-  }
+      );
 }
