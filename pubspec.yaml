@@ -39,8 +39,7 @@ dependencies:
   dio:
   flutter_bloc: ^8.0.0
   url_launcher: ^6.0.9
-  flutter_linkify: ^5.0.2
-  linkable: ^1.0.4
+  link_text: ^0.2.0
 
 dev_dependencies:
   flutter_test:
