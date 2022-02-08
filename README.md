@@ -1,16 +1,28 @@
-# chistaya_linia_test
+# Тестовое задание 
+Описание задачи
 
-A new Flutter project.
+У приложения должно быть 2 экрана:
+1. На 1-м экране пользователь делает фотографию.
+2. На 2-м экране видит ссылку на это изображение в интернете (можно кликнуть и откроется браузер), а так же информацию об изображении: имя файла и размер.
 
-## Getting Started
+Для постинга изображения можно использовать imgbb.com. Однако кандидат может использовать любой другой. Описание API  можно посмотреть тут: https://api.imgbb.com/
+Способ реализации, внешний вид и остальное выбирается кандидатом самостоятельно.
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
+## Технологии 
+В проекте использовались технологии:
+  - Dart/Flutter
+  - API: https://api.imgbb.com/
+  - Для запросов к API: Dio
+  - State manager: Cubit
+  - Доступ к камере: Camera
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+## Превью:
+![Screenshot_1644309039](https://user-images.githubusercontent.com/47809649/152948654-d9b3637e-26dd-46f2-8524-dc308cbe7249.png)
+![Screenshot_1644309191](https://user-images.githubusercontent.com/47809649/152948666-016544e0-b92c-47ce-92a3-417cd0f4c316.png)
+![Screenshot_1644309207](https://user-images.githubusercontent.com/47809649/152948670-070cb500-79da-468f-9996-974af070cd05.png)
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Планы на будущее:
+  - Убрать кнопку из экрана с ссылкой
+  - Улучшить обработку ошибок
+  - Добавить индикатор загрузки изображения на сервер
